@@ -42,14 +42,14 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     private static int OFFSET = 10;
 
-    public GamePanel(Context context, SurfaceHolder surfaceHolder) {
+    public GamePanel(Context context) {
         super(context);
 //        getHolder().addCallback(this);
 //        thread = new MainThread(getHolder(), this);
         setFocusable(true);
 
-        this.surfaceHolder = surfaceHolder;
 
+        surfaceHolder = getHolder();
         deck = new Deck();
         turn = new TurnPile(deck);
         turn.shuffle();
@@ -82,6 +82,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+
         return super.onTouchEvent(event);
     }
 
