@@ -94,7 +94,6 @@ public class Card {
             else setTouched(false);
         }
         else setTouched(false);
-
     }
 
 

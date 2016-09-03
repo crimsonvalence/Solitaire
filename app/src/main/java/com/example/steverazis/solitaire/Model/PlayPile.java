@@ -34,6 +34,8 @@ public class PlayPile {
         int i;
         for(i = 0; i < faceDown; i++) {
             listOfDown.add(turn.getCards().get(i));
+            turn.getCards().get(i).setX(this.x);
+            turn.getCards().get(i).setY(this.y);
         }
         while (i > 0) {
             turn.cards.remove(0);
@@ -43,6 +45,8 @@ public class PlayPile {
         int j;
         for(j = 0; j < faceUp; j++) {
             listOfUp.add(turn.getCards().get(j));
+            turn.getCards().get(j).setX(this.x);
+            turn.getCards().get(j).setY(this.y);
         }
         while (j > 0) {
             turn.cards.remove(0);
@@ -72,7 +76,9 @@ public class PlayPile {
         int i;
         if (isValidGroup(cards)) {
             for(i = 0; i < cards.size(); i++) {
-              listOfUp.add(cards.get(i));
+                listOfUp.add(cards.get(i));
+                cards.get(i).setX(x);
+                cards.get(i).setY(y);
             }
         }
     }
@@ -137,14 +143,22 @@ public class PlayPile {
         for(i = 0; i<listOfDown.size(); i++) {
             if(i == 0) {
                 canvas.drawBitmap(blackCardBack, x, y, null);
+                listOfDown.get(i).setX(x);
+                listOfDown.get(i).setY(y);
             }
             canvas.drawBitmap(blackCardBack, x, (y + i*OFFSET), null);
+            listOfDown.get(i).setX(x);
+            listOfDown.get(i).setY(y + i*OFFSET);
         }
         for(j = 0; j<listOfUp.size(); j++) {
             if (i == 0) {
                 canvas.drawBitmap(listOfUp.get(j).getBitmap(), x, y, null);
+                listOfUp.get(i).setX(x);
+                listOfUp.get(i).setY(y);
             }
             canvas.drawBitmap(listOfUp.get(j).getBitmap(), x, (y + (i+j)*OFFSET), null);
+            listOfUp.get(i).setX(x);
+            listOfUp.get(i).setY(y + (i+j)*OFFSET);
         }
     }
 }

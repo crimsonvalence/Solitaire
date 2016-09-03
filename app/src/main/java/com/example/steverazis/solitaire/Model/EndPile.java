@@ -58,6 +58,8 @@ public class EndPile {
     public void addCard(Card card) {
         if (isSuitAllowed(card) && isValidType(card)) {
             cardStack.push(card);
+            card.setX(x);
+            card.setY(y);
         }
         if (cardStack.size() > 0) {
             bitmap = cardStack.peek().getBitmap();

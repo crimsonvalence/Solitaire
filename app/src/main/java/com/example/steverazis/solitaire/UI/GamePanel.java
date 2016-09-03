@@ -9,12 +9,15 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import com.example.steverazis.solitaire.Model.Card;
 import com.example.steverazis.solitaire.Model.Deck;
 import com.example.steverazis.solitaire.Model.EndPile;
 import com.example.steverazis.solitaire.Model.PlayPile;
 import com.example.steverazis.solitaire.Model.Suit;
 import com.example.steverazis.solitaire.Model.TurnPile;
 import com.example.steverazis.solitaire.R;
+
+import java.util.ArrayList;
 
 /**
  * Created by SteveRazis on 16-08-24.
@@ -36,18 +39,16 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     private PlayPile play5;
     private PlayPile play6;
     private PlayPile play7;
-
     private int cardWidth = BitmapFactory.decodeResource(Resources.getSystem(), R.drawable.spades_ace).getWidth();
     private int cardHeight = BitmapFactory.decodeResource(Resources.getSystem(), R.drawable.spades_ace).getHeight();
-
     private static int OFFSET = 10;
+    private ArrayList<Card> selected;
 
     public GamePanel(Context context) {
         super(context);
 //        getHolder().addCallback(this);
 //        thread = new MainThread(getHolder(), this);
         setFocusable(true);
-
 
         surfaceHolder = getHolder();
         deck = new Deck();
@@ -82,8 +83,61 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            int i;
+            for (i = 0; i < deck.getCards().size(); i++) {                                                                //PRESSES A CARD
+                deck.getCards().get(i).handleActionDown((int) event.getX(), (int) event.getY());
+            }
+            if ((event.getX() >= turn.getLeftX() - cardWidth) && (event.getX() <= turn.getLeftX() + cardWidth)) {         //PRESSES THE TURN PILE
+                if (((event.getY() >= turn.getLeftY() - cardHeight) && (event.getY() <= turn.getLeftY()))) {
+                    turn.turnOver();
+                }
+            }
+            if (selected.size() > 0) {                                                                                    //PRESSES THE BOTTOM OF A PLAY PILE WHILE A CARD IS SELECTED
+                checkSelectPlay(event, play1);
+                checkSelectPlay(event, play2);
+                checkSelectPlay(event, play3);
+                checkSelectPlay(event, play4);
+                checkSelectPlay(event, play5);
+                checkSelectPlay(event, play6);
+                checkSelectPlay(event, play7);
+            }
+            if (selected.size() == 1) {
+                if ((event.getX() >= spadeEndPile.getX() - cardWidth) && (event.getX() <= spadeEndPile.getX() + cardWidth)) {
+                    if (((event.getY() >= spadeEndPile.getY() - cardHeight) && (event.getY() <= spadeEndPile.getY()))) {  //PRESSES THE SPADE END PILE WHILE A CARD IS SELECTED
+                        spadeEndPile.addCard(selected.get(0));
+                    }
+                }
+                if ((event.getX() >= heartsEndPile.getX() - cardWidth) && (event.getX() <= heartsEndPile.getX() + cardWidth)) {
+                    if (((event.getY() >= heartsEndPile.getY() - cardHeight) && (event.getY() <= heartsEndPile.getY()))) {  //PRESSES THE HEARTS END PILE WHILE A CARD IS SELECTED
+                        heartsEndPile.addCard(selected.get(0));
+                    }
+                }
+                if ((event.getX() >= clubsEndPile.getX() - cardWidth) && (event.getX() <= clubsEndPile.getX() + cardWidth)) {
+                    if (((event.getY() >= clubsEndPile.getY() - cardHeight) && (event.getY() <= clubsEndPile.getY()))) {   //PRESSES THE CLUBS END PILE WHILE A CARD IS SELECTED
+                        clubsEndPile.addCard(selected.get(0));
+                    }
+                }
+                if ((event.getX() >= diamondEndPile.getX() - cardWidth) && (event.getX() <= diamondEndPile.getX() + cardWidth)) {
+                    if (((event.getY() >= diamondEndPile.getY() - cardHeight) && (event.getY() <= diamondEndPile.getY()))) {  //PRESSES THE DIAMOND END PILE WHILE A CARD IS SELECTED
+                        diamondEndPile.addCard(selected.get(0));
+                    }
+                }
+            }
+        }
+        updateCondition();
+        checkWin();
+        return true;
+    }
 
-        return super.onTouchEvent(event);
+    private void updateCondition() {
+        selected = new ArrayList<>();
+        int i;
+        for(i = 0; i<deck.getCards().size(); i++) {
+            if (deck.getCards().get(i).getTouched()) {
+                selected.add(deck.getCards().get(i));
+            }
+        }
     }
 
     @Override
@@ -95,8 +149,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
 
 //     STUFF FROM THREADING, NEED TO EDIT
-        @Override
-    public void surfaceCreated(SurfaceHolder surfaceHolder) {;
+    @Override
+    public void surfaceCreated(SurfaceHolder surfaceHolder) {
 //        thread.setRunning(true);
 //        thread.start();
     }

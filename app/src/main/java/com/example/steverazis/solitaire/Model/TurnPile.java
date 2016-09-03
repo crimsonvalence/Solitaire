@@ -45,6 +45,22 @@ public class TurnPile {
         return burnCards;
     }
 
+    public int getLeftX() {
+        return LEFT_X;
+    }
+
+    public int getLeftY() {
+        return LEFT_Y;
+    }
+
+    public int getRightX() {
+        return RIGHT_X;
+    }
+
+    public int getRightY() {
+        return RIGHT_Y;
+    }
+
 
     //EFFECTS: turns 3 cards over (moves from cards to burn cards)
     //         if 0 > cards < 3, then flips the amount of cards left over
@@ -109,6 +125,19 @@ public class TurnPile {
     //EFFECTS: Draws the TurnPile onto the canvas
     public void draw(Canvas canvas) {
         canvas.drawBitmap(leftSide, LEFT_X, LEFT_Y, null);
+        int i;
+        for(i = 0; i < cards.size(); i++) {
+            cards.get(i).setX(LEFT_X);
+            cards.get(i).setY(LEFT_Y);
+        }
         canvas.drawBitmap(rightSide, RIGHT_X, RIGHT_Y, null);
+        if (burnCards.size() > 0) {
+            int j;
+            for (j = 0; j < burnCards.size(); j++) {
+                burnCards.get(j).setX(RIGHT_X);
+                burnCards.get(j).setY(RIGHT_Y);
+            }
+        }
+
     }
 }

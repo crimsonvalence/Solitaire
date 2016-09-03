@@ -6,12 +6,6 @@ import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.example.steverazis.solitaire.Model.Deck;
-import com.example.steverazis.solitaire.Model.EndPile;
-import com.example.steverazis.solitaire.Model.PlayPile;
-import com.example.steverazis.solitaire.Model.Suit;
-import com.example.steverazis.solitaire.Model.TurnPile;
-
 public class SolitaireGame extends AppCompatActivity {
     private static final String TAG = SolitaireGame.class.getSimpleName();
 
