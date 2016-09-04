@@ -1,9 +1,7 @@
 package com.example.steverazis.solitaire.Model;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.drawable.Drawable;
 
 
 //REPRESENTS: -a typical card in a deck

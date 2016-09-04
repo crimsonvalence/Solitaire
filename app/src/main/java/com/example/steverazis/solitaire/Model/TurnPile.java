@@ -1,5 +1,6 @@
 package com.example.steverazis.solitaire.Model;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -20,23 +21,31 @@ public class TurnPile {
     private   ArrayList<Card> burnCards;
 
     //UI VARIABLES
-    private static Bitmap blackCardBack = BitmapFactory.decodeResource(Resources.getSystem(), R.drawable.black_cardback);
+    private Context context;
+    private Bitmap blackCardBack;
     private Bitmap leftSide;
     private Bitmap rightSide;
     private static int LEFT_X = 0;
     private static int LEFT_Y = 0;
-    private static int RIGHT_X = blackCardBack.getWidth();
-    private static int RIGHT_Y = blackCardBack.getHeight();
+    private int RIGHT_X;
+    private int RIGHT_Y;
 
 
     //CONSTRUCTOR
     public TurnPile(Deck deck) {
         cards = deck.getCards();
         burnCards = new ArrayList<>();
-        shuffle();
+
+        context = deck.getContext();
+        blackCardBack = BitmapFactory.decodeResource(context.getResources(), R.drawable.black_cardback);
+
+        RIGHT_X = blackCardBack.getWidth();
+        RIGHT_Y = blackCardBack.getHeight();
 
         leftSide = blackCardBack;
         rightSide = null;
+
+        shuffle();
     }
 
     //GETTERS
@@ -62,6 +71,10 @@ public class TurnPile {
 
     public int getRightY() {
         return RIGHT_Y;
+    }
+
+    public Context getContext() {
+        return context;
     }
 
 

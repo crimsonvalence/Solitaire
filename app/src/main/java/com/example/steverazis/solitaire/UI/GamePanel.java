@@ -1,7 +1,6 @@
 package com.example.steverazis.solitaire.UI;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -36,8 +35,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     private PlayPile play5;
     private PlayPile play6;
     private PlayPile play7;
-    private int cardWidth = BitmapFactory.decodeResource(Resources.getSystem(), R.drawable.spades_ace).getWidth();
-    private int cardHeight = BitmapFactory.decodeResource(Resources.getSystem(), R.drawable.spades_ace).getHeight();
+    private int cardWidth = BitmapFactory.decodeResource(this.getResources(), R.drawable.spades_ace).getWidth();
+    private int cardHeight = BitmapFactory.decodeResource(this.getResources(), R.drawable.spades_ace).getHeight();
     private static int OFFSET = 10;
     private ArrayList<Card> selected;
 
@@ -48,7 +47,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         setFocusable(true);
 
         surfaceHolder = getHolder();
-        deck = new Deck();
+        deck = new Deck(this.getContext());
         turn = new TurnPile(deck);
         turn.shuffle();
     }
@@ -56,10 +55,10 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     //SETTERS
     public void setEndPiles(Canvas canvas) {
-        spadeEndPile = new EndPile(Suit.SPADES, canvas.getWidth() - OFFSET, 0);
-        heartsEndPile = new EndPile(Suit.HEARTS, canvas.getWidth() - (2*OFFSET) - cardWidth, 0);
-        clubsEndPile = new EndPile(Suit.CLUBS, canvas.getWidth() - (2*OFFSET) - (2*cardWidth), 0);
-        diamondEndPile = new EndPile(Suit.DIAMONDS, canvas.getWidth() - (3*OFFSET) - (3*cardWidth), 0);
+        spadeEndPile = new EndPile(this.getContext(), Suit.SPADES, canvas.getWidth() - OFFSET, 0);
+        heartsEndPile = new EndPile(this.getContext(), Suit.HEARTS, canvas.getWidth() - (2*OFFSET) - cardWidth, 0);
+        clubsEndPile = new EndPile(this.getContext(), Suit.CLUBS, canvas.getWidth() - (2*OFFSET) - (2*cardWidth), 0);
+        diamondEndPile = new EndPile(this.getContext(), Suit.DIAMONDS, canvas.getWidth() - (3*OFFSET) - (3*cardWidth), 0);
     }
 
     public void setPlayPiles(Canvas canvas) {

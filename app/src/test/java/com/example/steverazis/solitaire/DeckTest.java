@@ -1,10 +1,17 @@
 package com.example.steverazis.solitaire;
 
+import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.BitmapFactory;
+import android.test.mock.MockContext;
+
 import com.example.steverazis.solitaire.Model.Card;
 import com.example.steverazis.solitaire.Model.CardType;
 import com.example.steverazis.solitaire.Model.Deck;
 import com.example.steverazis.solitaire.Model.Suit;
+import com.example.steverazis.solitaire.UI.SolitaireGame;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -12,14 +19,18 @@ import java.util.ArrayList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-/**
- * Created by SteveRazis on 16-08-24.
- */
 
 public class DeckTest {
-    /*
-    Deck deck = new Deck();
+    SolitaireGame testGame;
+    Deck deck = new Deck(testGame);
     ArrayList<Card> testCards = new ArrayList<>();
+    private Context context;
+
+    @Before
+    public void setUp() throws Exception {
+        testGame = new SolitaireGame();
+        context = testGame;
+    }
 
     @Test
     public void test_deckSize() throws Exception {
@@ -28,13 +39,13 @@ public class DeckTest {
 
     @Test
     public void test_containsSpadeAce() throws Exception {
-        Card spadeAce = new Card(Suit.SPADES, CardType.ACE);
+        Card spadeAce = new Card(Suit.SPADES, CardType.ACE, BitmapFactory.decodeResource(testGame.getResources(), R.drawable.spades_ace), 0, 0);
         assertTrue(deck.getCards().contains(spadeAce));
     }
 
     @Test
     public void test_containsDiamondKing() throws Exception {
-        Card diamondKing = new Card(Suit.DIAMONDS, CardType.KING);
+        Card diamondKing = new Card(Suit.DIAMONDS, CardType.KING, BitmapFactory.decodeResource(testGame.getResources(), R.drawable.diamonds_king), 0, 0);
         assertTrue(deck.getCards().contains(diamondKing));
     }
 
@@ -61,61 +72,61 @@ public class DeckTest {
 
 
     private void loadTestSuit() {
-        Card spadeAce = new Card(Suit.SPADES, CardType.ACE);
-        Card spade2 = new Card(Suit.SPADES, CardType.TWO);
-        Card spade3 = new Card(Suit.SPADES, CardType.THREE);
-        Card spade4 = new Card(Suit.SPADES, CardType.FOUR);
-        Card spade5 = new Card(Suit.SPADES, CardType.FIVE);
-        Card spade6 = new Card(Suit.SPADES, CardType.SIX);
-        Card spade7 = new Card(Suit.SPADES, CardType.SEVEN);
-        Card spade8 = new Card(Suit.SPADES, CardType.EIGHT);
-        Card spade9 = new Card(Suit.SPADES, CardType.NINE);
-        Card spade10 = new Card(Suit.SPADES, CardType.TEN);
-        Card spadeJack = new Card(Suit.SPADES, CardType.JACK);
-        Card spadeQueen = new Card(Suit.SPADES, CardType.QUEEN);
-        Card spadeKing = new Card(Suit.SPADES, CardType.KING);
+        Card spadeAce = new Card(Suit.SPADES, CardType.ACE, BitmapFactory.decodeResource(testGame.getResources(), R.drawable.spades_ace), 0, 0);
+        Card spade2 = new Card(Suit.SPADES, CardType.TWO, BitmapFactory.decodeResource(testGame.getResources(), R.drawable.spades_2), 0, 0);
+        Card spade3 = new Card(Suit.SPADES, CardType.THREE, BitmapFactory.decodeResource(testGame.getResources(), R.drawable.spades_3), 0, 0);
+        Card spade4 = new Card(Suit.SPADES, CardType.FOUR, BitmapFactory.decodeResource(testGame.getResources(), R.drawable.spades_4), 0, 0);
+        Card spade5 = new Card(Suit.SPADES, CardType.FIVE, BitmapFactory.decodeResource(testGame.getResources(), R.drawable.spades_5), 0, 0);
+        Card spade6 = new Card(Suit.SPADES, CardType.SIX, BitmapFactory.decodeResource(testGame.getResources(), R.drawable.spades_6), 0, 0);
+        Card spade7 = new Card(Suit.SPADES, CardType.SEVEN, BitmapFactory.decodeResource(testGame.getResources(), R.drawable.spades_7), 0, 0);
+        Card spade8 = new Card(Suit.SPADES, CardType.EIGHT, BitmapFactory.decodeResource(testGame.getResources(), R.drawable.spades_8), 0, 0);
+        Card spade9 = new Card(Suit.SPADES, CardType.NINE, BitmapFactory.decodeResource(testGame.getResources(), R.drawable.spades_9), 0, 0);
+        Card spade10 = new Card(Suit.SPADES, CardType.TEN, BitmapFactory.decodeResource(testGame.getResources(), R.drawable.spades_10), 0, 0);
+        Card spadeJack = new Card(Suit.SPADES, CardType.JACK, BitmapFactory.decodeResource(testGame.getResources(), R.drawable.spades_jack), 0, 0);
+        Card spadeQueen = new Card(Suit.SPADES, CardType.QUEEN, BitmapFactory.decodeResource(testGame.getResources(), R.drawable.spades_queen), 0, 0);
+        Card spadeKing = new Card(Suit.SPADES, CardType.KING, BitmapFactory.decodeResource(testGame.getResources(), R.drawable.spades_king), 0, 0);
 
-        Card heartAce = new Card(Suit.HEARTS, CardType.ACE);
-        Card heart2 = new Card(Suit.HEARTS, CardType.TWO);
-        Card heart3 = new Card(Suit.HEARTS, CardType.THREE);
-        Card heart4 = new Card(Suit.HEARTS, CardType.FOUR);
-        Card heart5 = new Card(Suit.HEARTS, CardType.FIVE);
-        Card heart6 = new Card(Suit.HEARTS, CardType.SIX);
-        Card heart7 = new Card(Suit.HEARTS, CardType.SEVEN);
-        Card heart8 = new Card(Suit.HEARTS, CardType.EIGHT);
-        Card heart9 = new Card(Suit.HEARTS, CardType.NINE);
-        Card heart10 = new Card(Suit.HEARTS, CardType.TEN);
-        Card heartJack = new Card(Suit.HEARTS, CardType.JACK);
-        Card heartQueen = new Card(Suit.HEARTS, CardType.QUEEN);
-        Card heartKing = new Card(Suit.HEARTS, CardType.KING);
+        Card heartAce = new Card(Suit.HEARTS, CardType.ACE, BitmapFactory.decodeResource(testGame.getResources(), R.drawable.hearts_ace), 0, 0);
+        Card heart2 = new Card(Suit.HEARTS, CardType.TWO, BitmapFactory.decodeResource(testGame.getResources(), R.drawable.hearts_2), 0, 0);
+        Card heart3 = new Card(Suit.HEARTS, CardType.THREE, BitmapFactory.decodeResource(testGame.getResources(), R.drawable.hearts_3), 0, 0);
+        Card heart4 = new Card(Suit.HEARTS, CardType.FOUR, BitmapFactory.decodeResource(testGame.getResources(), R.drawable.hearts_4), 0, 0);
+        Card heart5 = new Card(Suit.HEARTS, CardType.FIVE, BitmapFactory.decodeResource(testGame.getResources(), R.drawable.hearts_5), 0, 0);
+        Card heart6 = new Card(Suit.HEARTS, CardType.SIX, BitmapFactory.decodeResource(testGame.getResources(), R.drawable.hearts_6), 0, 0);
+        Card heart7 = new Card(Suit.HEARTS, CardType.SEVEN, BitmapFactory.decodeResource(testGame.getResources(), R.drawable.hearts_7), 0, 0);
+        Card heart8 = new Card(Suit.HEARTS, CardType.EIGHT, BitmapFactory.decodeResource(testGame.getResources(), R.drawable.hearts_8), 0, 0);
+        Card heart9 = new Card(Suit.HEARTS, CardType.NINE, BitmapFactory.decodeResource(testGame.getResources(), R.drawable.hearts_9), 0, 0);
+        Card heart10 = new Card(Suit.HEARTS, CardType.TEN, BitmapFactory.decodeResource(testGame.getResources(), R.drawable.hearts_10), 0, 0);
+        Card heartJack = new Card(Suit.HEARTS, CardType.JACK, BitmapFactory.decodeResource(testGame.getResources(), R.drawable.hearts_jack), 0, 0);
+        Card heartQueen = new Card(Suit.HEARTS, CardType.QUEEN, BitmapFactory.decodeResource(testGame.getResources(), R.drawable.hearts_queen), 0, 0);
+        Card heartKing = new Card(Suit.HEARTS, CardType.KING, BitmapFactory.decodeResource(testGame.getResources(), R.drawable.hearts_king), 0, 0);
 
-        Card clubsAce = new Card(Suit.CLUBS, CardType.ACE);
-        Card clubs2 = new Card(Suit.CLUBS, CardType.TWO);
-        Card clubs3 = new Card(Suit.CLUBS, CardType.THREE);
-        Card clubs4 = new Card(Suit.CLUBS, CardType.FOUR);
-        Card clubs5 = new Card(Suit.CLUBS, CardType.FIVE);
-        Card clubs6 = new Card(Suit.CLUBS, CardType.SIX);
-        Card clubs7 = new Card(Suit.CLUBS, CardType.SEVEN);
-        Card clubs8 = new Card(Suit.CLUBS, CardType.EIGHT);
-        Card clubs9 = new Card(Suit.CLUBS, CardType.NINE);
-        Card clubs10 = new Card(Suit.CLUBS, CardType.TEN);
-        Card clubsJack = new Card(Suit.CLUBS, CardType.JACK);
-        Card clubsQueen = new Card(Suit.CLUBS, CardType.QUEEN);
-        Card clubsKing = new Card(Suit.CLUBS, CardType.KING);
+        Card clubsAce = new Card(Suit.CLUBS, CardType.ACE, BitmapFactory.decodeResource(testGame.getResources(), R.drawable.clubs_ace), 0, 0);
+        Card clubs2 = new Card(Suit.CLUBS, CardType.TWO, BitmapFactory.decodeResource(testGame.getResources(), R.drawable.clubs_2), 0, 0);
+        Card clubs3 = new Card(Suit.CLUBS, CardType.THREE, BitmapFactory.decodeResource(testGame.getResources(), R.drawable.clubs_3), 0, 0);
+        Card clubs4 = new Card(Suit.CLUBS, CardType.FOUR, BitmapFactory.decodeResource(testGame.getResources(), R.drawable.clubs_4), 0, 0);
+        Card clubs5 = new Card(Suit.CLUBS, CardType.FIVE, BitmapFactory.decodeResource(testGame.getResources(), R.drawable.clubs_5), 0, 0);
+        Card clubs6 = new Card(Suit.CLUBS, CardType.SIX, BitmapFactory.decodeResource(testGame.getResources(), R.drawable.clubs_6), 0, 0);
+        Card clubs7 = new Card(Suit.CLUBS, CardType.SEVEN, BitmapFactory.decodeResource(testGame.getResources(), R.drawable.clubs_7), 0, 0);
+        Card clubs8 = new Card(Suit.CLUBS, CardType.EIGHT, BitmapFactory.decodeResource(testGame.getResources(), R.drawable.clubs_8), 0, 0);
+        Card clubs9 = new Card(Suit.CLUBS, CardType.NINE, BitmapFactory.decodeResource(testGame.getResources(), R.drawable.clubs_9), 0, 0);
+        Card clubs10 = new Card(Suit.CLUBS, CardType.TEN, BitmapFactory.decodeResource(testGame.getResources(), R.drawable.clubs_10), 0, 0);
+        Card clubsJack = new Card(Suit.CLUBS, CardType.JACK, BitmapFactory.decodeResource(testGame.getResources(), R.drawable.clubs_jack), 0, 0);
+        Card clubsQueen = new Card(Suit.CLUBS, CardType.QUEEN, BitmapFactory.decodeResource(testGame.getResources(), R.drawable.clubs_queen), 0, 0);
+        Card clubsKing = new Card(Suit.CLUBS, CardType.KING, BitmapFactory.decodeResource(testGame.getResources(), R.drawable.clubs_king), 0, 0);
 
-        Card diamondAce = new Card(Suit.DIAMONDS, CardType.ACE);
-        Card diamond2 = new Card(Suit.DIAMONDS, CardType.TWO);
-        Card diamond3 = new Card(Suit.DIAMONDS, CardType.THREE);
-        Card diamond4 = new Card(Suit.DIAMONDS, CardType.FOUR);
-        Card diamond5 = new Card(Suit.DIAMONDS, CardType.FIVE);
-        Card diamond6 = new Card(Suit.DIAMONDS, CardType.SIX);
-        Card diamond7 = new Card(Suit.DIAMONDS, CardType.SEVEN);
-        Card diamond8 = new Card(Suit.DIAMONDS, CardType.EIGHT);
-        Card diamond9 = new Card(Suit.DIAMONDS, CardType.NINE);
-        Card diamond10 = new Card(Suit.DIAMONDS, CardType.TEN);
-        Card diamondJack = new Card(Suit.DIAMONDS, CardType.JACK);
-        Card diamondQueen = new Card(Suit.DIAMONDS, CardType.QUEEN);
-        Card diamondKing = new Card(Suit.DIAMONDS, CardType.KING);
+        Card diamondAce = new Card(Suit.DIAMONDS, CardType.ACE, BitmapFactory.decodeResource(testGame.getResources(), R.drawable.diamonds_ace), 0, 0);
+        Card diamond2 = new Card(Suit.DIAMONDS, CardType.TWO, BitmapFactory.decodeResource(testGame.getResources(), R.drawable.diamonds_2), 0, 0);
+        Card diamond3 = new Card(Suit.DIAMONDS, CardType.THREE, BitmapFactory.decodeResource(testGame.getResources(), R.drawable.diamonds_3), 0, 0);
+        Card diamond4 = new Card(Suit.DIAMONDS, CardType.FOUR, BitmapFactory.decodeResource(testGame.getResources(), R.drawable.diamonds_4), 0, 0);
+        Card diamond5 = new Card(Suit.DIAMONDS, CardType.FIVE, BitmapFactory.decodeResource(testGame.getResources(), R.drawable.diamonds_5), 0, 0);
+        Card diamond6 = new Card(Suit.DIAMONDS, CardType.SIX, BitmapFactory.decodeResource(testGame.getResources(), R.drawable.diamonds_6), 0, 0);
+        Card diamond7 = new Card(Suit.DIAMONDS, CardType.SEVEN, BitmapFactory.decodeResource(testGame.getResources(), R.drawable.diamonds_7), 0, 0);
+        Card diamond8 = new Card(Suit.DIAMONDS, CardType.EIGHT, BitmapFactory.decodeResource(testGame.getResources(), R.drawable.diamonds_8), 0, 0);
+        Card diamond9 = new Card(Suit.DIAMONDS, CardType.NINE, BitmapFactory.decodeResource(testGame.getResources(), R.drawable.diamonds_9), 0, 0);
+        Card diamond10 = new Card(Suit.DIAMONDS, CardType.TEN, BitmapFactory.decodeResource(testGame.getResources(), R.drawable.diamonds_10), 0, 0);
+        Card diamondJack = new Card(Suit.DIAMONDS, CardType.JACK, BitmapFactory.decodeResource(testGame.getResources(), R.drawable.diamonds_jack), 0, 0);
+        Card diamondQueen = new Card(Suit.DIAMONDS, CardType.QUEEN, BitmapFactory.decodeResource(testGame.getResources(), R.drawable.diamonds_queen), 0, 0);
+        Card diamondKing = new Card(Suit.DIAMONDS, CardType.KING, BitmapFactory.decodeResource(testGame.getResources(), R.drawable.diamonds_king), 0, 0);
 
         testCards.add(spadeAce);
         testCards.add(spade2);
@@ -174,5 +185,4 @@ public class DeckTest {
         testCards.add(diamondKing);
 
     }
-*/
 }

@@ -1,6 +1,6 @@
 package com.example.steverazis.solitaire.Model;
 
-import android.content.res.Resources;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -25,11 +25,13 @@ public class PlayPile {
     private static int OFFSET = 20;
     private int x;
     private int y;
-    private Bitmap blackCardBack = BitmapFactory.decodeResource(Resources.getSystem(), R.drawable.black_cardback);
+    private Context context;
+    private Bitmap blackCardBack = BitmapFactory.decodeResource(context.getResources(), R.drawable.black_cardback);
 
 
     //CONSTRUCTOR
     public PlayPile(TurnPile turn, int faceDown, int faceUp, int x, int y) {
+        context = turn.getContext();
         numSelected = 0;
 
         listOfDown = new ArrayList<>();

@@ -1,6 +1,6 @@
 package com.example.steverazis.solitaire.Model;
 
-import android.content.res.Resources;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -23,7 +23,7 @@ public class EndPile {
 
 
     //CONSTRUCTOR
-    public EndPile(Suit suit, int x, int y) {
+    public EndPile(Context context, Suit suit, int x, int y) {
         cardStack = new Stack<>();
         allowed = suit;
         this.x = x;
@@ -31,16 +31,16 @@ public class EndPile {
 
         switch(suit) {
             case SPADES:
-                bitmap = BitmapFactory.decodeResource(Resources.getSystem(), R.drawable.spades);
+                bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.spades);
                 break;
             case HEARTS:
-                bitmap = BitmapFactory.decodeResource(Resources.getSystem(), R.drawable.hearts);
+                bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.hearts);
                 break;
             case CLUBS:
-                bitmap = BitmapFactory.decodeResource(Resources.getSystem(), R.drawable.clubs);
+                bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.clubs);
                 break;
             case DIAMONDS:
-                bitmap = BitmapFactory.decodeResource(Resources.getSystem(), R.drawable.diamonds);
+                bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.diamonds);
                 break;
         }
     }
