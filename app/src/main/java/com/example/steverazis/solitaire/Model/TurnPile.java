@@ -7,27 +7,29 @@ import android.graphics.Canvas;
 
 import com.example.steverazis.solitaire.R;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 
-/**
- * Created by SteveRazis on 16-08-23.
- */
+
+//REPRESENTS: -the two piles at the top left of a solitaire game
+//            -one pile (leftmost) is always face-down, one pile (right) will always have face-up cards
+//            -note that TurnPile is used to shuffle and "deal out" cards to the PlayPiles and EndPiles
+
 public class TurnPile {
     protected ArrayList<Card> cards;
     private   ArrayList<Card> burnCards;
 
+    //UI VARIABLES
     private static Bitmap blackCardBack = BitmapFactory.decodeResource(Resources.getSystem(), R.drawable.black_cardback);
-
     private Bitmap leftSide;
     private Bitmap rightSide;
-
     private static int LEFT_X = 0;
     private static int LEFT_Y = 0;
     private static int RIGHT_X = blackCardBack.getWidth();
     private static int RIGHT_Y = blackCardBack.getHeight();
 
+
+    //CONSTRUCTOR
     public TurnPile(Deck deck) {
         cards = deck.getCards();
         burnCards = new ArrayList<>();
@@ -37,6 +39,7 @@ public class TurnPile {
         rightSide = null;
     }
 
+    //GETTERS
     public ArrayList<Card> getCards() {
         return cards;
     }
@@ -106,6 +109,7 @@ public class TurnPile {
         rightSide = burnCards.get(0).getBitmap();
     }
 
+
     //EFFECTS: removes the top card from the burnCards list
     public void removeBurn() {
         if (burnCards.size() > 0) {
@@ -113,6 +117,7 @@ public class TurnPile {
             rightSide = burnCards.get(0).getBitmap();
         }
     }
+
 
     // EFFECTS: randomly shuffles the cards in the "cards" list
     //          (NEED TO SHUFFLE BEFORE DEALING)
@@ -122,7 +127,9 @@ public class TurnPile {
         Collections.shuffle(cards);
     }
 
+
     //EFFECTS: Draws the TurnPile onto the canvas
+    //NOTE: It also sets the x and y co-ordinates of all cards
     public void draw(Canvas canvas) {
         canvas.drawBitmap(leftSide, LEFT_X, LEFT_Y, null);
         int i;

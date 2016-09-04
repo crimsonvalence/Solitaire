@@ -19,11 +19,8 @@ import com.example.steverazis.solitaire.R;
 
 import java.util.ArrayList;
 
-/**
- * Created by SteveRazis on 16-08-24.
- */
+
 public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
-//    MainThread thread;
 
     private SurfaceHolder surfaceHolder;
     private Deck deck;
@@ -44,10 +41,10 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     private static int OFFSET = 10;
     private ArrayList<Card> selected;
 
+
+    //CONSTRUCTOR
     public GamePanel(Context context) {
         super(context);
-//        getHolder().addCallback(this);
-//        thread = new MainThread(getHolder(), this);
         setFocusable(true);
 
         surfaceHolder = getHolder();
@@ -56,6 +53,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         turn.shuffle();
     }
 
+
+    //SETTERS
     public void setEndPiles(Canvas canvas) {
         spadeEndPile = new EndPile(Suit.SPADES, canvas.getWidth() - OFFSET, 0);
         heartsEndPile = new EndPile(Suit.HEARTS, canvas.getWidth() - (2*OFFSET) - cardWidth, 0);
@@ -73,6 +72,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         play7 = new PlayPile(turn, 6, 1, (canvas.getWidth() + (6*cardWidth) + (7*OFFSET)), (canvas.getHeight() + cardHeight + OFFSET));
     }
 
+
+
     //EFFECTS: returns true if all of the endpiles have all of the cards
     public boolean checkWin() {
         return spadeEndPile.isComplete() &&
@@ -84,42 +85,57 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
+
+            //TODO: NEED TO ADD FUNCTIONALITY FOR MULTI-SELECT IN PLAY PILES
+
+            //PRESSES A CARD
             int i;
-            for (i = 0; i < deck.getCards().size(); i++) {                                                                //PRESSES A CARD
+            for (i = 0; i < deck.getCards().size(); i++) {
                 deck.getCards().get(i).handleActionDown((int) event.getX(), (int) event.getY());
             }
-            if ((event.getX() >= turn.getLeftX() - cardWidth) && (event.getX() <= turn.getLeftX() + cardWidth)) {         //PRESSES THE TURN PILE
+
+            //PRESSES THE TURN PILE
+            if ((event.getX() >= turn.getLeftX() - cardWidth) && (event.getX() <= turn.getLeftX() + cardWidth)) {
                 if (((event.getY() >= turn.getLeftY() - cardHeight) && (event.getY() <= turn.getLeftY()))) {
                     turn.turnOver();
                 }
             }
-            if (selected.size() > 0) {                                                                                    //PRESSES THE BOTTOM OF A PLAY PILE WHILE A CARD IS SELECTED
-                checkSelectPlay(event, play1);
-                checkSelectPlay(event, play2);
-                checkSelectPlay(event, play3);
-                checkSelectPlay(event, play4);
-                checkSelectPlay(event, play5);
-                checkSelectPlay(event, play6);
-                checkSelectPlay(event, play7);
+
+            //PRESSES A PLAY PILE WHILE A CARD IS SELECTED
+            if (selected.size() > 0) {
+                checkSelectPlay(event, play1, selected);
+                checkSelectPlay(event, play2, selected);
+                checkSelectPlay(event, play3, selected);
+                checkSelectPlay(event, play4, selected);
+                checkSelectPlay(event, play5, selected);
+                checkSelectPlay(event, play6, selected);
+                checkSelectPlay(event, play7, selected);
             }
+
+
+            //PRESSES END PILES WHILE CARD IS SELECTED
             if (selected.size() == 1) {
+                //SPADE END PILE
                 if ((event.getX() >= spadeEndPile.getX() - cardWidth) && (event.getX() <= spadeEndPile.getX() + cardWidth)) {
-                    if (((event.getY() >= spadeEndPile.getY() - cardHeight) && (event.getY() <= spadeEndPile.getY()))) {  //PRESSES THE SPADE END PILE WHILE A CARD IS SELECTED
+                    if (((event.getY() >= spadeEndPile.getY() - cardHeight) && (event.getY() <= spadeEndPile.getY()))) {
                         spadeEndPile.addCard(selected.get(0));
                     }
                 }
+                //HEARTS END PILE
                 if ((event.getX() >= heartsEndPile.getX() - cardWidth) && (event.getX() <= heartsEndPile.getX() + cardWidth)) {
-                    if (((event.getY() >= heartsEndPile.getY() - cardHeight) && (event.getY() <= heartsEndPile.getY()))) {  //PRESSES THE HEARTS END PILE WHILE A CARD IS SELECTED
+                    if (((event.getY() >= heartsEndPile.getY() - cardHeight) && (event.getY() <= heartsEndPile.getY()))) {
                         heartsEndPile.addCard(selected.get(0));
                     }
                 }
+                //CLUBS END PILE
                 if ((event.getX() >= clubsEndPile.getX() - cardWidth) && (event.getX() <= clubsEndPile.getX() + cardWidth)) {
-                    if (((event.getY() >= clubsEndPile.getY() - cardHeight) && (event.getY() <= clubsEndPile.getY()))) {   //PRESSES THE CLUBS END PILE WHILE A CARD IS SELECTED
+                    if (((event.getY() >= clubsEndPile.getY() - cardHeight) && (event.getY() <= clubsEndPile.getY()))) {
                         clubsEndPile.addCard(selected.get(0));
                     }
                 }
+                //DIAMONDS END PILE
                 if ((event.getX() >= diamondEndPile.getX() - cardWidth) && (event.getX() <= diamondEndPile.getX() + cardWidth)) {
-                    if (((event.getY() >= diamondEndPile.getY() - cardHeight) && (event.getY() <= diamondEndPile.getY()))) {  //PRESSES THE DIAMOND END PILE WHILE A CARD IS SELECTED
+                    if (((event.getY() >= diamondEndPile.getY() - cardHeight) && (event.getY() <= diamondEndPile.getY()))) {
                         diamondEndPile.addCard(selected.get(0));
                     }
                 }
@@ -129,6 +145,20 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         checkWin();
         return true;
     }
+
+    //EFFECT: Add card to bottom of playPile (IN CORRECT ORDER) if event is pressing playPile and card is valid
+    //NOTE: Helper method for onTouchEvent(), in the "presses play pile" section
+    private void checkSelectPlay(MotionEvent event, PlayPile playPile, ArrayList<Card> cards) {
+        if ((event.getX() >= playPile.getX() - cardWidth) && (event.getX() <= playPile.getX() + cardWidth)) {
+            if (((event.getY() >= playPile.getY() - cardHeight) && (event.getY() <= playPile.getY()))) {
+                playPile.addCards(cards);
+            }
+        }
+    }
+
+    //EFFECTS: Updates the selected list with all the cards that are selected
+    //POSSIBLE ISSUE: adding to the selected list might take the card from a list it should stay in
+    //TODO: fix this method
 
     private void updateCondition() {
         selected = new ArrayList<>();
@@ -147,12 +177,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         setPlayPiles(canvas);
     }
 
-
-//     STUFF FROM THREADING, NEED TO EDIT
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
-//        thread.setRunning(true);
-//        thread.start();
     }
 
     @Override
@@ -161,17 +187,5 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
-//        // tell the thread to shut down and wait for it to finish
-//        // this is a clean shutdown
-//        boolean retry = true;
-//        while (retry) {
-//            try {
-//                thread.join();
-//                retry = false;
-//            }
-//            catch (InterruptedException e) {
-//                //try again shutting down the thread
-//            }
-//        }
     }
 }

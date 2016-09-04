@@ -9,9 +9,10 @@ import com.example.steverazis.solitaire.R;
 
 import java.util.Stack;
 
-/**
- * Created by SteveRazis on 16-08-23.
- */
+
+//REPRESENTS: -1 of the 4 piles at the top-right in solitaire
+//            -win condition is determined according to these
+//            -note that the piles in this pile should all have the same x and y co-ordinates
 
 public class EndPile {
     private Stack<Card>cardStack;
@@ -20,6 +21,8 @@ public class EndPile {
     private int y;
     private Bitmap bitmap;
 
+
+    //CONSTRUCTOR
     public EndPile(Suit suit, int x, int y) {
         cardStack = new Stack<>();
         allowed = suit;
@@ -42,6 +45,7 @@ public class EndPile {
         }
     }
 
+    //GETTERS
     public int getX() {
         return x;
     }
@@ -53,6 +57,8 @@ public class EndPile {
     public Card getTopCard() {
         return cardStack.peek();
     }
+
+
 
     //EFFECTS: adds a card to the top of the cardStack if the card is the right suit and type
     public void addCard(Card card) {
@@ -66,20 +72,24 @@ public class EndPile {
         }
     }
 
-    //REQUIRES: the stack to have at least 1 item in it (???)
+
     //EFFECTS: removes a card from the top of the stack, returns the card that was removed
     public Card removeCard() {
         return cardStack.pop();
     }
 
+
     //EFFECTS: returns true if the Suit of the given card is the same as the pile's suit
+    //NOTE: HELPER METHOD FOR addCard()
     public boolean isSuitAllowed(Card card) {
         return card.getSuit().equals(allowed);
     }
 
+
     //EFFECTS: returns true if the the card is an acceptable type to be placed on top of the stack
     //         the card is accepted if it is one type above the top of the current stack
     //         an ace is accepted if the stack is empty
+    //NOTE: HELPER METHOD FOR addCard()
     public boolean isValidType(Card card) {
         if (cardStack.isEmpty() && (card.getType() == CardType.ACE)) {
             return true;
@@ -152,10 +162,12 @@ public class EndPile {
         return false;
     }
 
+
     //EFFECTS: Draws the EndPile onto the canvas
     public void draw(Canvas canvas) {
         canvas.drawBitmap(bitmap, x, y, null);
     }
+
 
     //EFFECTS: returns true if the pile is complete (i.e., the stack is filled from ACE -> KING)
     public boolean isComplete() {

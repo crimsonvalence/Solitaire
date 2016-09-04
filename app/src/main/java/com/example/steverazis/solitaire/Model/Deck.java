@@ -7,19 +7,19 @@ import com.example.steverazis.solitaire.R;
 
 import java.util.ArrayList;
 
-/**
- * Created by SteveRazis on 16-08-23.
- */
+
+//REPRESENTS: -a common 52 card deck (with no jokers)
+
 public class Deck {
     private ArrayList<Card> cards;
 
-    /*
-    Constructor
-     */
+    //CONSTRUCTOR
     public Deck() {
         genDeck();
     }
 
+
+    //GETTERS
     public ArrayList<Card> getCards(){
         return cards;
     }

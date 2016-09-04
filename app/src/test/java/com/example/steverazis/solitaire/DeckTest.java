@@ -48,7 +48,7 @@ public class DeckTest {
     }
 
     @Test
-    public void test_containsOneOfCards() throws Exception {
+    public void test_containsOneOfAllCards() throws Exception {
         loadTestSuit();
         int i;
         int deckSize = 52;

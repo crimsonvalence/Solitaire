@@ -5,9 +5,10 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 
-/**
- * Created by SteveRazis on 16-08-23.
- */
+
+//REPRESENTS: -a typical card in a deck
+//            -handleActionDown is in this method for all cards
+
 public class Card {
     private int colour; //0 is black, 1 is red
     private Suit suit;
@@ -19,7 +20,7 @@ public class Card {
     private boolean touched;
 
 
-
+    //CONSTRUCTOR
     public Card(Suit suit, CardType type, Bitmap bitmap, int x, int y) {
         this.suit = suit;
         this.type = type;
@@ -34,6 +35,8 @@ public class Card {
         else colour = 1;
     }
 
+
+    //GETTERS AND SETTERS
     /*
     NOTE: 0 = black,   1 = red
     Effects: returns the colour of the card
@@ -74,18 +77,22 @@ public class Card {
         this.y = y;
     }
 
-    public void setTouched(boolean touched) {
-        this.touched = touched;
-    }
-
     public boolean getTouched() {
         return touched;
     }
 
+    public void setTouched(boolean touched) {
+        this.touched = touched;
+    }
+
+
+    //EFFECT: draws the card onto the given canvas
     public void draw(Canvas canvas) {
         canvas.drawBitmap(bitmap, x - (bitmap.getWidth() / 2), y - (bitmap.getHeight() / 2), null);
     }
 
+    //EFFECT: if eventX and eventY are within the bounds of a cards x and y co-ordinates, then select it
+    //NOTE:   touching twice does not de-select it
     public void handleActionDown(int eventX, int eventY) {
         if ((eventX >= (x - bitmap.getWidth() / 2)) && (eventX <= (x + bitmap.getWidth() / 2))) {
             if ((eventY >= (y - bitmap.getHeight() / 2)) && (eventY <= (y + bitmap.getHeight() / 2))) {
