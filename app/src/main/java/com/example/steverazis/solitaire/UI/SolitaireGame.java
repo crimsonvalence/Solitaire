@@ -3,8 +3,6 @@ package com.example.steverazis.solitaire.UI;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Window;
-import android.view.WindowManager;
 
 public class SolitaireGame extends AppCompatActivity {
     private static final String TAG = SolitaireGame.class.getSimpleName();
